@@ -1,0 +1,10 @@
+# Terraform: estado, plugins y variables privadas
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+# Credenciales (nunca subirlas)
+credentials
+*.pem
