@@ -1,0 +1,30 @@
+# prometheus.yml - AndysMotors EP2
+# Define cada cuánto y a quién le pide métricas Prometheus.
+
+global:
+  scrape_interval: 15s # cada 15 s pide métricas a todos los targets
+  evaluation_interval: 15s
+
+scrape_configs:
+  # 1. El propio Prometheus
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # 2. Las 6 plataformas de AndysMotors (métricas técnicas y de negocio).
+  #    Los nombres son los contenedores del profe; Docker los resuelve
+  #    porque Prometheus se conecta a la misma red (demo_andys).
+  - job_name: "andysmotors"
+    static_configs:
+      - targets:
+          - "andys-web-api:8081"
+          - "andys-stock-api:8082"
+          - "andys-agenda-api:8083"
+          - "andys-crm-api:8084"
+          - "andys-pagos-api:8085"
+          - "andys-gateway-externo:8086"
+
+  # 3. El balanceador HAProxy (trae su exporter integrado)
+  - job_name: "haproxy"
+    static_configs:
+      - targets: ["andys-haproxy:8404"]

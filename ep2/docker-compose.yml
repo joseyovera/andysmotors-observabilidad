@@ -1,0 +1,45 @@
+# Stack de observabilidad de AndysMotors (EP2): Prometheus + Grafana
+
+services:
+
+  prometheus:
+    image: prom/prometheus:v2.53.2
+    container_name: prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"   # rotación: guarda 15 días
+      - "--web.enable-lifecycle"               # permite recargar la config
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - demo_andys
+
+  grafana:
+    image: grafana/grafana-oss:10.4.7
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - demo_andys
+
+# Discos persistentes: los datos sobreviven si el contenedor se recrea
+volumes:
+  prometheus-data:
+  grafana-data:
+
+# Usamos la red que YA creó la plataforma del profe,
+# así Prometheus llega a las aplicaciones por su nombre
+networks:
+  demo_andys:
+    external: true
+
