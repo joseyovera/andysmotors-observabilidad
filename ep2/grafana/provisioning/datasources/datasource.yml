@@ -1,0 +1,10 @@
+# Grafana crea esta conexión automáticamente al arrancar
+apiVersion: 1
+
+datasources:
+  - name: Prometheus-AndysMotors
+    type: prometheus
+    uid: prometheus
+    access: proxy
+    url: http://prometheus:9090 # nombre del contenedor, no localhost
+    isDefault: true
