@@ -89,11 +89,15 @@ resource "aws_instance" "ep2" {
       -o /usr/local/lib/docker/cli-plugins/docker-compose
     chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
   EOF
-
+  # No reemplazar la EC2 si sale una AMI nueva o cambia el script de arranque
+  lifecycle {
+    ignore_changes = [ami, user_data]
+  }
   tags = {
     Name = "AndysMotors-EP2"
   }
 }
+
 
 output "ip_publica" {
   value = aws_instance.ep2.public_ip

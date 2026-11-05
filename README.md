@@ -4,13 +4,14 @@ Infraestructura y paso a paso de cada evaluación del caso **AndysMotors**, para
 
 ```mermaid
 flowchart LR
-    EP1["EP1<br/>EC2 + CloudWatch<br/>prueba de estrés"] --> EP2["EP2<br/>Plataforma AndysMotors<br/>+ Prometheus + Grafana"] --> EP3["EP3<br/>(próximamente)"]
+    EP1["EP1<br/>EC2 + CloudWatch<br/>prueba de estrés"] --> EP2["EP2<br/>Plataforma AndysMotors<br/>+ Prometheus + Grafana"] --> EP3["EP3<br/>Logs en CloudWatch<br/>alarmas + dashboards"]
 ```
 
 ## Evaluaciones
 
 - **[EP1 · Cimientos de observabilidad](ep1/README.md):** EC2 creada con Terraform, prueba de estrés con `stress-ng` y métricas en CloudWatch.
 - **[EP2 · Stack Open Source](ep2/README.md):** plataforma AndysMotors del docente en una EC2, tráfico simulado con su script Python, Prometheus, 3 consultas PromQL y 2 dashboards de Grafana como código.
+- **[EP3 · Logs en CloudWatch](ep3/README.md):** CloudWatch Agent, Logs Insights, filtros métricos, alarma con aviso por correo (SNS) y 2 dashboards.
 
 ## Requisitos en el PC
 
