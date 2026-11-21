@@ -8,3 +8,6 @@ crash.log
 # Credenciales (nunca subirlas)
 credentials
 *.pem
+
+# Librerías de Node.js (se descargan con npm install, no se suben)
+node_modules/

@@ -1,0 +1,12 @@
+{
+  "name": "andysmotors-metricas-negocio",
+  "version": "1.0.0",
+  "description": "Inyección de métricas de negocio de AndysMotors en CloudWatch (EP4 ADY1103)",
+  "main": "metricas-negocio.js",
+  "scripts": {
+    "start": "node metricas-negocio.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.1175.0"
+  }
+}
