@@ -1,0 +1,58 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenegarEC2SinCentroDeCostos",
+      "Effect": "Deny",
+      "Action": "ec2:RunInstances",
+      "Resource": "arn:aws:ec2:*:*:instance/*",
+      "Condition": {
+        "Null": { "aws:RequestTag/CentroDeCostos": "true" }
+      }
+    },
+    {
+      "Sid": "DenegarObservabilidadSinCentroDeCostos",
+      "Effect": "Deny",
+      "Action": [
+        "logs:CreateLogGroup",
+        "sns:CreateTopic",
+        "cloudwatch:PutMetricAlarm"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Null": { "aws:RequestTag/CentroDeCostos": "true" }
+      }
+    },
+    {
+      "Sid": "DenegarValoresNoPermitidos",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:RunInstances",
+        "logs:CreateLogGroup",
+        "sns:CreateTopic",
+        "cloudwatch:PutMetricAlarm"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:RequestTag/CentroDeCostos": ["TI-Observabilidad", "TI-Plataformas", "Comercial"]
+        },
+        "Null": { "aws:RequestTag/CentroDeCostos": "false" }
+      }
+    },
+    {
+      "Sid": "ProtegerEtiquetaCentroDeCostos",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:DeleteTags",
+        "logs:UntagResource",
+        "sns:UntagResource",
+        "cloudwatch:UntagResource"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ForAnyValue:StringEquals": { "aws:TagKeys": ["CentroDeCostos"] }
+      }
+    }
+  ]
+}
